@@ -1,7 +1,8 @@
 from google import genai
 from dotenv import load_dotenv
+import pygame
+from gtts import gTTS
 import os
-
 
 #Carrega as variáveis do arquivo .env
 load_dotenv()
@@ -10,7 +11,26 @@ API_KEY = os.getenv("GEMINI_API_KEY")
 # Cria o client Gemini
 client = genai.Client(api_key=API_KEY)
 
-# CHATBOT
+def speak(texto):
+    tts = gTTS(text=texto, lang='pt-br')
+    arquivo = "voz.mp3"
+    try:
+        os.remove(arquivo)
+    except OSError:
+        pass
+    tts.save(arquivo)
+
+    pygame.mixer.init()
+    pygame.mixer.music.load(arquivo)
+    pygame.mixer.music.play()
+
+    while pygame.mixer.music.get_busy():
+        pass
+
+    pygame.mixer.music.unload()
+
+# CHATBOT Gemini
+
 print("=" * 50)
 print("🤖 CHATBOT GEMINI")
 print("Digite 'sair' para encerrar.")
@@ -51,3 +71,5 @@ while True:
     )
 
     print(f'🤖: {texto}')
+
+print(speak(texto))
