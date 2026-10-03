@@ -1,7 +1,5 @@
-pandas
-numpy
-matplotlib
-scikit-learn
-tensorflow
-spacy
-jupyter
+google-genai
+python-dotenv
+pygame
+gTTS
+ 
